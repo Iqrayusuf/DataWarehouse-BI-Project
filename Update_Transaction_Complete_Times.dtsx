@@ -1,0 +1,1227 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/26/2025 7:02:48 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-TVB3DDR"
+  DTS:CreatorName="DESKTOP-TVB3DDR\Dell"
+  DTS:DTSID="{232480E8-B366-42D3-8E3A-BEE662BBEF8B}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Update_Transaction_Complete_Times"
+  DTS:PackageType="5"
+  DTS:VersionBuild="12"
+  DTS:VersionGUID="{6EA99F8E-ACDA-45EB-8756-2446B00367D3}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Update Txn Update"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{AD1CE05C-9E11-4B4A-9ED5-F918487E6DAD}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Txn Update"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Update Txn Update\Conditional Split"
+              componentClassID="Microsoft.ConditionalSplit"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+              name="Conditional Split"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Update Txn Update\Conditional Split.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Update Txn Update\Conditional Split.Inputs[Conditional Split Input].Columns[txn_id]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="txn_id"
+                      lineageId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[txn_id]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Update Txn Update\Conditional Split.Outputs[ToMedicalVisit]"
+                  description="Output 1 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="ToMedicalVisit"
+                  synchronousInputId="Package\Update Txn Update\Conditional Split.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">[LEFT](#{Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[txn_id]},2) == "MR"</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">LEFT(txn_id,2) == "MR"</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Update Txn Update\Conditional Split.Outputs[ToInvoice]"
+                  description="Output 2 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="ToInvoice"
+                  synchronousInputId="Package\Update Txn Update\Conditional Split.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">[LEFT](#{Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[txn_id]},3) == "INV"</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">LEFT(txn_id,3) == "INV"</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">1</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Update Txn Update\Conditional Split.Outputs[Conditional Split Default Output]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="Conditional Split Default Output"
+                  synchronousInputId="Package\Update Txn Update\Conditional Split.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Update Txn Update\Conditional Split.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\Update Txn Update\Conditional Split.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Txn Update\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update Txn Update\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update Txn Update\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update Txn Update\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Update Txn Update\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Update Txn Update\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Update Txn Update\Data Conversion.Inputs[Data Conversion Input].Columns[accm_txn_complete_time]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="accm_txn_complete_time"
+                      lineageId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[accm_txn_complete_time]" />
+                    <inputColumn
+                      refId="Package\Update Txn Update\Data Conversion.Inputs[Data Conversion Input].Columns[accm_txn_complete_time_copy]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="accm_txn_complete_time_copy"
+                      lineageId="Package\Update Txn Update\Derived Column.Outputs[Derived Column Output].Columns[accm_txn_complete_time_copy]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Update Txn Update\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Update Txn Update\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Txn Update\Data Conversion.Outputs[Data Conversion Output].Columns[accm_txn_complete_time_converted]"
+                      dataType="date"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Update Txn Update\Data Conversion.Outputs[Data Conversion Output].Columns[accm_txn_complete_time_converted]"
+                      name="accm_txn_complete_time_converted"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[accm_txn_complete_time]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Update Txn Update\Data Conversion.Outputs[Data Conversion Output].Columns[accm_txn_complete_time_copy_converted]"
+                      dataType="date"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Update Txn Update\Data Conversion.Outputs[Data Conversion Output].Columns[accm_txn_complete_time_copy_converted]"
+                      name="accm_txn_complete_time_copy_converted"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Update Txn Update\Derived Column.Outputs[Derived Column Output].Columns[accm_txn_complete_time_copy]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Update Txn Update\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Update Txn Update\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Txn Update\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update Txn Update\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update Txn Update\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update Txn Update\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Update Txn Update\Data Conversion 1"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion 1"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Update Txn Update\Data Conversion 1.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Update Txn Update\Data Conversion 1.Inputs[Data Conversion Input].Columns[accm_txn_complete_time]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="accm_txn_complete_time"
+                      lineageId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[accm_txn_complete_time]" />
+                    <inputColumn
+                      refId="Package\Update Txn Update\Data Conversion 1.Inputs[Data Conversion Input].Columns[accm_txn_complete_time_copy_invoice]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="accm_txn_complete_time_copy_invoice"
+                      lineageId="Package\Update Txn Update\Derived Column 1.Outputs[Derived Column Output].Columns[accm_txn_complete_time_copy_invoice]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Update Txn Update\Data Conversion 1.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Update Txn Update\Data Conversion 1.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Txn Update\Data Conversion 1.Outputs[Data Conversion Output].Columns[accm_txn_complete_time_converted]"
+                      dataType="date"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Update Txn Update\Data Conversion 1.Outputs[Data Conversion Output].Columns[accm_txn_complete_time_converted]"
+                      name="accm_txn_complete_time_converted"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[accm_txn_complete_time]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Update Txn Update\Data Conversion 1.Outputs[Data Conversion Output].Columns[accm_txn_complete_time_copy_invoice_converted]"
+                      dataType="date"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Update Txn Update\Data Conversion 1.Outputs[Data Conversion Output].Columns[accm_txn_complete_time_copy_invoice_converted]"
+                      name="accm_txn_complete_time_copy_invoice_converted"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Update Txn Update\Derived Column 1.Outputs[Derived Column Output].Columns[accm_txn_complete_time_copy_invoice]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Update Txn Update\Data Conversion 1.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Update Txn Update\Data Conversion 1.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Txn Update\Data Conversion 1.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update Txn Update\Data Conversion 1.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update Txn Update\Data Conversion 1.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update Txn Update\Data Conversion 1.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Update Txn Update\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Update Txn Update\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Update Txn Update\Derived Column.Inputs[Derived Column Input].Columns[accm_txn_complete_time]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="accm_txn_complete_time"
+                      lineageId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[accm_txn_complete_time]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Update Txn Update\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Update Txn Update\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Txn Update\Derived Column.Outputs[Derived Column Output].Columns[accm_txn_complete_time_copy]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Update Txn Update\Derived Column.Outputs[Derived Column Output].Columns[accm_txn_complete_time_copy]"
+                      name="accm_txn_complete_time_copy"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[accm_txn_complete_time]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">accm_txn_complete_time</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Update Txn Update\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Update Txn Update\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Txn Update\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update Txn Update\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update Txn Update\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update Txn Update\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Update Txn Update\Derived Column 1"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column 1"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Update Txn Update\Derived Column 1.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Update Txn Update\Derived Column 1.Inputs[Derived Column Input].Columns[accm_txn_complete_time]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="accm_txn_complete_time"
+                      lineageId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[accm_txn_complete_time]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Update Txn Update\Derived Column 1.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Update Txn Update\Derived Column 1.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Txn Update\Derived Column 1.Outputs[Derived Column Output].Columns[accm_txn_complete_time_copy_invoice]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Update Txn Update\Derived Column 1.Outputs[Derived Column Output].Columns[accm_txn_complete_time_copy_invoice]"
+                      name="accm_txn_complete_time_copy_invoice"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[accm_txn_complete_time]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">accm_txn_complete_time</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Update Txn Update\Derived Column 1.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Update Txn Update\Derived Column 1.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Txn Update\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update Txn Update\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update Txn Update\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update Txn Update\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Update Txn Update\OLE DB Command"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="OLE DB Command"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">UPDATE FactMedicalVisits
+SET 
+    accm_txn_complete_time = ?, 
+    txn_process_time_hours = DATEDIFF(HOUR, accm_txn_create_time, ?),
+    ModifiedDate = GETDATE()
+WHERE 
+    RecordID = ?
+</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Update Txn Update\OLE DB Command.Connections[OleDbConnection]"
+                  connectionManagerID="{0E68A0B2-FC40-4D80-9AA3-EB52EC3A7549}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[DESKTOP-TVB3DDR_SQLEXPRESS.HospitalDW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Update Txn Update\OLE DB Command.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Update Txn Update\OLE DB Command.Inputs[OLE DB Command Input].Columns[accm_txn_complete_time_converted]"
+                      cachedDataType="date"
+                      cachedName="accm_txn_complete_time_converted"
+                      externalMetadataColumnId="Package\Update Txn Update\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\Update Txn Update\Data Conversion.Outputs[Data Conversion Output].Columns[accm_txn_complete_time_converted]" />
+                    <inputColumn
+                      refId="Package\Update Txn Update\OLE DB Command.Inputs[OLE DB Command Input].Columns[accm_txn_complete_time_copy_converted]"
+                      cachedDataType="date"
+                      cachedName="accm_txn_complete_time_copy_converted"
+                      externalMetadataColumnId="Package\Update Txn Update\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\Update Txn Update\Data Conversion.Outputs[Data Conversion Output].Columns[accm_txn_complete_time_copy_converted]" />
+                    <inputColumn
+                      refId="Package\Update Txn Update\OLE DB Command.Inputs[OLE DB Command Input].Columns[txn_id]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="txn_id"
+                      externalMetadataColumnId="Package\Update Txn Update\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      lineageId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[txn_id]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Update Txn Update\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="dbTimeStamp"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Update Txn Update\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      dataType="r8"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Update Txn Update\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Param_2">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">1</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Update Txn Update\OLE DB Command.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\Update Txn Update\OLE DB Command.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Update Txn Update\OLE DB Command.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\Update Txn Update\OLE DB Command.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Txn Update\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update Txn Update\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update Txn Update\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update Txn Update\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Update Txn Update\OLE DB Command 1"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="OLE DB Command 1"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">UPDATE FactInvoice
+SET 
+    accm_txn_complete_time = ?, 
+    txn_process_time_hours = DATEDIFF(HOUR, accm_txn_create_time, ?),
+    ModifiedDate = GETDATE()
+WHERE 
+    InvoiceID = ?
+</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Update Txn Update\OLE DB Command 1.Connections[OleDbConnection]"
+                  connectionManagerID="{0E68A0B2-FC40-4D80-9AA3-EB52EC3A7549}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[DESKTOP-TVB3DDR_SQLEXPRESS.HospitalDW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Update Txn Update\OLE DB Command 1.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Update Txn Update\OLE DB Command 1.Inputs[OLE DB Command Input].Columns[accm_txn_complete_time_converted]"
+                      cachedDataType="date"
+                      cachedName="accm_txn_complete_time_converted"
+                      externalMetadataColumnId="Package\Update Txn Update\OLE DB Command 1.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\Update Txn Update\Data Conversion 1.Outputs[Data Conversion Output].Columns[accm_txn_complete_time_converted]" />
+                    <inputColumn
+                      refId="Package\Update Txn Update\OLE DB Command 1.Inputs[OLE DB Command Input].Columns[accm_txn_complete_time_copy_invoice_converted]"
+                      cachedDataType="date"
+                      cachedName="accm_txn_complete_time_copy_invoice_converted"
+                      externalMetadataColumnId="Package\Update Txn Update\OLE DB Command 1.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\Update Txn Update\Data Conversion 1.Outputs[Data Conversion Output].Columns[accm_txn_complete_time_copy_invoice_converted]" />
+                    <inputColumn
+                      refId="Package\Update Txn Update\OLE DB Command 1.Inputs[OLE DB Command Input].Columns[txn_id]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="txn_id"
+                      externalMetadataColumnId="Package\Update Txn Update\OLE DB Command 1.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      lineageId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[txn_id]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Update Txn Update\OLE DB Command 1.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="dbTimeStamp"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Update Txn Update\OLE DB Command 1.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      dataType="r8"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Update Txn Update\OLE DB Command 1.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Param_2">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Update Txn Update\OLE DB Command 1.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\Update Txn Update\OLE DB Command 1.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Update Txn Update\OLE DB Command 1.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\Update Txn Update\OLE DB Command 1.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Txn Update\OLE DB Command 1.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update Txn Update\OLE DB Command 1.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update Txn Update\OLE DB Command 1.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update Txn Update\OLE DB Command 1.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Update Txn Update\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT txn_id, accm_txn_complete_time FROM TxnUpdate</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Update Txn Update\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="{0E68A0B2-FC40-4D80-9AA3-EB52EC3A7549}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[DESKTOP-TVB3DDR_SQLEXPRESS.HospitalDW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[accm_txn_complete_time]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[accm_txn_complete_time]"
+                      lineageId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[accm_txn_complete_time]"
+                      name="accm_txn_complete_time"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[txn_id]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[txn_id]"
+                      length="20"
+                      lineageId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[txn_id]"
+                      name="txn_id"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[accm_txn_complete_time]"
+                      dataType="dbTimeStamp"
+                      name="accm_txn_complete_time" />
+                    <externalMetadataColumn
+                      refId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[txn_id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="txn_id" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[txn_id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[txn_id]"
+                      name="txn_id" />
+                    <outputColumn
+                      refId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[accm_txn_complete_time]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[accm_txn_complete_time]"
+                      name="accm_txn_complete_time" />
+                    <outputColumn
+                      refId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Update Txn Update.Paths[Data Conversion Output]"
+              endId="Package\Update Txn Update\OLE DB Command.Inputs[OLE DB Command Input]"
+              name="Data Conversion Output"
+              startId="Package\Update Txn Update\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Update Txn Update.Paths[Data Conversion Output1]"
+              endId="Package\Update Txn Update\OLE DB Command 1.Inputs[OLE DB Command Input]"
+              name="Data Conversion Output"
+              startId="Package\Update Txn Update\Data Conversion 1.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Update Txn Update.Paths[Derived Column Output]"
+              endId="Package\Update Txn Update\Data Conversion.Inputs[Data Conversion Input]"
+              name="Derived Column Output"
+              startId="Package\Update Txn Update\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Update Txn Update.Paths[Derived Column Output1]"
+              endId="Package\Update Txn Update\Data Conversion 1.Inputs[Data Conversion Input]"
+              name="Derived Column Output"
+              startId="Package\Update Txn Update\Derived Column 1.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Update Txn Update.Paths[OLE DB Source Output]"
+              endId="Package\Update Txn Update\Conditional Split.Inputs[Conditional Split Input]"
+              name="OLE DB Source Output"
+              startId="Package\Update Txn Update\OLE DB Source.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Update Txn Update.Paths[ToInvoice]"
+              endId="Package\Update Txn Update\Derived Column 1.Inputs[Derived Column Input]"
+              name="ToInvoice"
+              startId="Package\Update Txn Update\Conditional Split.Outputs[ToInvoice]" />
+            <path
+              refId="Package\Update Txn Update.Paths[ToMedicalVisit]"
+              endId="Package\Update Txn Update\Derived Column.Inputs[Derived Column Input]"
+              name="ToMedicalVisit"
+              startId="Package\Update Txn Update\Conditional Split.Outputs[ToMedicalVisit]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="168,41.6"
+          Id="Package\Update Txn Update"
+          TopLeft="77.9999960387748,8.96666664255991" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Update Txn Update">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="164,41.6"
+          Id="Package\Update Txn Update\Data Conversion 1"
+          TopLeft="371.33331498421,302.833331911034" />
+        <NodeLayout
+          Size="152.8,41.6"
+          Id="Package\Update Txn Update\Derived Column"
+          TopLeft="176.333327277667,234.499998824795" />
+        <NodeLayout
+          Size="152,41.6"
+          Id="Package\Update Txn Update\OLE DB Source"
+          TopLeft="171.3333242726,74.833332851198" />
+        <NodeLayout
+          Size="167.2,41.6"
+          Id="Package\Update Txn Update\OLE DB Command"
+          TopLeft="180.499990438422,372.766664418711" />
+        <NodeLayout
+          Size="161.6,41.6"
+          Id="Package\Update Txn Update\Derived Column 1"
+          TopLeft="358.833314028052,232.099998860955" />
+        <NodeLayout
+          Size="153.6,41.6"
+          Id="Package\Update Txn Update\Conditional Split"
+          TopLeft="168.833324409194,155.433332290716" />
+        <NodeLayout
+          Size="156,41.6"
+          Id="Package\Update Txn Update\Data Conversion"
+          TopLeft="180.499995355805,304.366665214234" />
+        <NodeLayout
+          Size="176,41.6"
+          Id="Package\Update Txn Update\OLE DB Command 1"
+          TopLeft="384.999978964528,380.733331675993" />
+        <EdgeLayout
+          Id="Package\Update Txn Update.Paths[ToMedicalVisit]"
+          TopLeft="249.183325843431,197.033332290716">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37.4666665340795"
+              Start="0,0"
+              End="0,29.9666665340795">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.9666665340795" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-32.27748046875,10.1088215482897,64.5549609375,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Update Txn Update.Paths[ToInvoice]"
+          TopLeft="269.899991075861,197.033332290716">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="169.733322952191,35.0666665702396"
+              Start="0,0"
+              End="169.733322952191,27.5666665702396">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10.2435738439942" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.2435738439942"
+                    Point2="0,14.2435738439942"
+                    Point3="4,14.2435738439942" />
+                  <mssgle:LineSegment
+                    End="165.733322952191,14.2435738439942" />
+                  <mssgle:CubicBezierSegment
+                    Point1="165.733322952191,14.2435738439942"
+                    Point2="169.733322952191,14.2435738439942"
+                    Point3="169.733322952191,18.2435738439942" />
+                  <mssgle:LineSegment
+                    End="169.733322952191,27.5666665702396" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="62.4192200698457,19.2435738439942,44.8948828125,9.470703125"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Update Txn Update.Paths[OLE DB Source Output]"
+          TopLeft="246.483324340897,116.433332851198">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,38.9999994395177"
+              Start="0,0"
+              End="0,31.4999994395177">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.4999994395177" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Update Txn Update.Paths[Derived Column Output1]"
+          TopLeft="439.633314028052,273.699998860955">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="13.7000009561579,29.1333330500788"
+              Start="0,0"
+              End="13.7000009561579,21.6333330500788">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10.5666665250394" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.5666665250394"
+                    Point2="0,14.5666665250394"
+                    Point3="4,14.5666665250394" />
+                  <mssgle:LineSegment
+                    End="9.70000095615785,14.5666665250394" />
+                  <mssgle:CubicBezierSegment
+                    Point1="9.70000095615785,14.5666665250394"
+                    Point2="13.7000009561579,14.5666665250394"
+                    Point3="13.7000009561579,18.5666665250394" />
+                  <mssgle:LineSegment
+                    End="13.7000009561579,21.6333330500788" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Update Txn Update.Paths[Derived Column Output]"
+          TopLeft="255.616661316736,276.099998824795">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,28.2666663894388"
+              Start="0,0"
+              End="0,20.7666663894388">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.7666663894388" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Update Txn Update.Paths[Data Conversion Output1]"
+          TopLeft="453.33331498421,344.433331911034">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="19.6666639803185,36.299999764959"
+              Start="0,0"
+              End="19.6666639803185,28.799999764959">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.1499998824795" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.1499998824795"
+                    Point2="0,18.1499998824795"
+                    Point3="4,18.1499998824795" />
+                  <mssgle:LineSegment
+                    End="15.6666639803185,18.1499998824795" />
+                  <mssgle:CubicBezierSegment
+                    Point1="15.6666639803185,18.1499998824795"
+                    Point2="19.6666639803185,18.1499998824795"
+                    Point3="19.6666639803185,22.1499998824795" />
+                  <mssgle:LineSegment
+                    End="19.6666639803185,28.799999764959" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Update Txn Update.Paths[Data Conversion Output]"
+          TopLeft="261.299992897113,345.966665214234">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,26.7999992044768"
+              Start="0,0"
+              End="0,19.2999992044768">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.2999992044768" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Update Txn Update\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D2ABAB84-BF74-430A-B69E-9DC6D40DDA17}") = "HealthCareDW_Cube", "HealthCareDW_Cube\HealthCareDW_Cube.dwproj", "{777C8858-EEBF-4918-88F8-8D2E63B5AC4A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{777C8858-EEBF-4918-88F8-8D2E63B5AC4A}.Development|Default.ActiveCfg = Development
+		{777C8858-EEBF-4918-88F8-8D2E63B5AC4A}.Development|Default.Build.0 = Development
+		{777C8858-EEBF-4918-88F8-8D2E63B5AC4A}.Development|Default.Deploy.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

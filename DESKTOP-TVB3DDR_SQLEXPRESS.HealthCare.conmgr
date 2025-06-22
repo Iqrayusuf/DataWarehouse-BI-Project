@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="DESKTOP-TVB3DDR_SQLEXPRESS.HealthCare"
+  DTS:DTSID="{902F8C07-7FD8-4009-B43C-E7E4A047EB50}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=DESKTOP-TVB3DDR\SQLEXPRESS;Initial Catalog=HealthCare;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-HealthCareETL-{902F8C07-7FD8-4009-B43C-E7E4A047EB50}DESKTOP-TVB3DDR\SQLEXPRESS.HealthCare;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
